@@ -1,0 +1,20 @@
+@mixin pj-input {
+  border: 1px solid black;
+  height: 24px;
+  border-radius: 5px;
+  padding-left: 10px;
+  font-size: 14px;
+  &:focus {
+    outline: none;
+  }
+}
+
+@mixin pj-submit-btn {
+  border: 1px solid #437985;
+  background: transparent;
+  color: #437985;
+  padding: 5px 50px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
