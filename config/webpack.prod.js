@@ -11,7 +11,10 @@ module.exports = webpackMerge(commonConfig, {
 
   output: {
     path: path.resolve(__dirname, '../build'),
-    publicPath: '/',
+
+    // NOTE: this will add prefix to the asset path
+    // like: /app.js
+    // publicPath: '/',
     filename: '[name].[hash].js'
   },
 
