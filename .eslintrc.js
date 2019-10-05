@@ -3,7 +3,8 @@ module.exports = {
     "plugins": [
         "react",
         "jsx-a11y",
-        "import"
+        "import",
+        "react-hooks"
     ],
     "parserOptions": {
       "ecmaVersion": 8,
@@ -34,7 +35,10 @@ module.exports = {
       "no-underscore-dangle": 0,
       "no-nested-ternary": 0,
       "react/sort-comp": 0,
-      'class-methods-use-this': 0
+      'class-methods-use-this': 0,
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+      "no-mixed-operators": 0
     },
     "globals": {
       "React": false,
