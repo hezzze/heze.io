@@ -3,7 +3,7 @@
 * using hooks api from react 16.8+
 */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './styles';
@@ -11,23 +11,26 @@ import styles from './styles';
 export default function AtvImage(props) {
   const [rootElem, setRootElem] = useState({
     width: 0,
-    height: 0
+    height: 0,
+    node: null
   });
   const [isOnHover, setIsOnHover] = useState(false);
   const [container, setContainer] = useState({});
   const [shine, setShine] = useState({});
   const [layers, setLayers] = useState([]);
+  const [offsets, setOffsets] = useState({});
 
-  const rootRef = useRef(null);
-
-  useEffect(() => {
-    if (!props.isStatic) {
+  const rootRef = useCallback((node) => {
+    if (!props.isStatic && node !== null) {
       setRootElem({
-        width: rootRef.current.clientWidth || rootRef.current.offsetWidth
-        || rootRef.current.scrollWidth,
-        height: rootRef.current.clientHeight || rootRef.current.offsetHeight
-        || rootRef.current.scrollHeight
+        width: node.clientWidth || node.offsetWidth
+        || node.scrollWidth,
+        height: node.clientHeight || node.offsetHeight
+        || node.scrollHeight,
+        node
       });
+
+      setOffsets(node.getBoundingClientRect());
     }
   }, [props.isStatic]);
 
@@ -38,7 +41,8 @@ export default function AtvImage(props) {
 
     const bodyScrollTop = document.body.scrollTop || document.getElementsByTagName('html')[0].scrollTop;
     const bodyScrollLeft = document.body.scrollLeft;
-    const offsets = rootRef.current.getBoundingClientRect();
+    // const offsets = rootRef.current.getBoundingClientRect();
+
     const wMultiple = 320 / rootElem.width;
     const offsetX = 0.52 - (pageX - offsets.left - bodyScrollLeft) / rootElem.width; // cursor position X
     const offsetY = 0.52 - (pageY - offsets.top - bodyScrollTop) / rootElem.height; // cursor position Y
@@ -51,6 +55,8 @@ export default function AtvImage(props) {
 
     const rawAngle = arad * 180 / Math.PI - 90; // convert rad to degrees
     const angle = rawAngle < 0 ? rawAngle + 360 : rawAngle;
+
+    console.log(xRotate, yRotate);
 
     setContainer({
       transform: `rotateX(${xRotate}deg) rotateY(${yRotate}deg)` + (isOnHover ? ' scale3d(1.07,1.07,1.07)' : ''),
@@ -69,6 +75,7 @@ export default function AtvImage(props) {
   const handleTouchMove = (evt) => {
     evt.preventDefault();
     const { pageX, pageY } = evt.touches[0];
+    // console.log(pageX, pageY);
     handleMove({ pageX, pageY });
   };
 
@@ -82,6 +89,37 @@ export default function AtvImage(props) {
     setShine({});
     setLayers([]);
   };
+
+  // useEffect(() => {
+  //   if (!props.isStatic) {
+  //     setRootElem({
+  //       width: rootRef.current.clientWidth || rootRef.current.offsetWidth
+  //       || rootRef.current.scrollWidth,
+  //       height: rootRef.current.clientHeight || rootRef.current.offsetHeight
+  //       || rootRef.current.scrollHeight
+  //     });
+  //   }
+  // }, [props.isStatic]);
+
+  useEffect(() => {
+    const rootNode = rootElem.node;
+
+    // TODO: figure out a cleaner way to do this, fully understand useCallback
+    // because of this https://github.com/facebook/react/issues/8968
+    // listeners needs to be added manually
+    if (rootNode) {
+      rootNode.addEventListener('touchmove', handleTouchMove);
+      rootNode.addEventListener('touchstart', handleEnter);
+      rootNode.addEventListener('touchend', handleLeave);
+    }
+    return () => {
+      if (rootNode) {
+        rootNode.removeEventListener('touchmove', handleTouchMove);
+        rootNode.removeEventListener('touchstart', handleEnter);
+        rootNode.removeEventListener('touchend', handleLeave);
+      }
+    };
+  }, [rootElem]);
 
   const renderShadow = () => (
     <div style={{ ...styles.shadow, ...(isOnHover ? styles.shadowOnHover : {}) }} />
@@ -130,9 +168,6 @@ export default function AtvImage(props) {
       onMouseMove={handleMove}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
-      onTouchMove={handleTouchMove}
-      onTouchStart={handleEnter}
-      onTouchEnd={handleLeave}
       className={props.className || ''}
       ref={rootRef}
     >

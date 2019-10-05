@@ -6,7 +6,7 @@ const backImageSrc = require('../assets/card-back.png');
 const App = () => (
   <div>
     <center><p>你好，朋友<br />What triggers your curiosity today?</p></center>
-    <div className="hz-card-box">
+    <div className="hz-card-box disable-select">
       <AtvImage
         layers={[
           backImageSrc
