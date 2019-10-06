@@ -9,39 +9,28 @@ import PropTypes from 'prop-types';
 import styles from './styles';
 
 export default function AtvImage(props) {
-  const [rootElem, setRootElem] = useState({
-    width: 0,
-    height: 0,
-    node: null
-  });
   const [isOnHover, setIsOnHover] = useState(false);
   const [container, setContainer] = useState({});
   const [shine, setShine] = useState({});
   const [layers, setLayers] = useState([]);
-  const [offsets, setOffsets] = useState({});
 
-  const rootRef = useCallback((node) => {
-    if (!props.isStatic && node !== null) {
-      setRootElem({
-        width: node.clientWidth || node.offsetWidth
-        || node.scrollWidth,
-        height: node.clientHeight || node.offsetHeight
-        || node.scrollHeight,
-        node
-      });
+  const rootElemRef = useRef({
+    width: 0,
+    height: 0
+  });
+  const offsetsRef = useRef();
 
-      setOffsets(node.getBoundingClientRect());
-    }
-  }, [props.isStatic]);
+
+  const rootRef = useRef(null);
 
   const handleMove = ({ pageX, pageY }) => {
     const layerCount = props.layers.length; // the number of layers
 
-    // const { rootElem.width, rootElemHeight } = this.state;
-
     const bodyScrollTop = document.body.scrollTop || document.getElementsByTagName('html')[0].scrollTop;
     const bodyScrollLeft = document.body.scrollLeft;
-    // const offsets = rootRef.current.getBoundingClientRect();
+
+    const offsets = offsetsRef.current;
+    const rootElem = rootElemRef.current;
 
     const wMultiple = 320 / rootElem.width;
     const offsetX = 0.52 - (pageX - offsets.left - bodyScrollLeft) / rootElem.width; // cursor position X
@@ -90,23 +79,28 @@ export default function AtvImage(props) {
     setLayers([]);
   };
 
-  // useEffect(() => {
-  //   if (!props.isStatic) {
-  //     setRootElem({
-  //       width: rootRef.current.clientWidth || rootRef.current.offsetWidth
-  //       || rootRef.current.scrollWidth,
-  //       height: rootRef.current.clientHeight || rootRef.current.offsetHeight
-  //       || rootRef.current.scrollHeight
-  //     });
-  //   }
-  // }, [props.isStatic]);
-
+  // effect hook will be called after DOM is painted, so calculations can go in there
+  // see Note section in https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
   useEffect(() => {
-    const rootNode = rootElem.node;
+    const rootNode = rootRef.current;
+
+    if (!props.isStatic) {
+      rootElemRef.current = {
+        width: rootNode.clientWidth || rootNode.offsetWidth
+        || rootNode.scrollWidth,
+        height: rootNode.clientHeight || rootNode.offsetHeight
+        || rootNode.scrollHeight
+      };
+    }
+    offsetsRef.current = rootNode.getBoundingClientRect();
+
 
     // TODO: figure out a cleaner way to do this, fully understand useCallback
     // because of this https://github.com/facebook/react/issues/8968
     // listeners needs to be added manually
+    // breaks:
+    // 1. dependencies for the hook since function has to be defined in top-level scope
+    // 2. can't use native react event prop like onTouchMove, onTouchStart, onTouchEnd
     if (rootNode) {
       rootNode.addEventListener('touchmove', handleTouchMove);
       rootNode.addEventListener('touchstart', handleEnter);
@@ -119,7 +113,7 @@ export default function AtvImage(props) {
         rootNode.removeEventListener('touchend', handleLeave);
       }
     };
-  }, [rootElem]);
+  }, [props.isStatic]);
 
   const renderShadow = () => (
     <div style={{ ...styles.shadow, ...(isOnHover ? styles.shadowOnHover : {}) }} />
@@ -162,7 +156,7 @@ export default function AtvImage(props) {
     <div
       style={{
         ...styles.root,
-        transform: `perspective(${rootElem.width * 3}px)`,
+        transform: `perspective(${rootElemRef.current.width * 3}px)`,
         ...(props.style ? props.style : {}),
       }}
       onMouseMove={handleMove}
