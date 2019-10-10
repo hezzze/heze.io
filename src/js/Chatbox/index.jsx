@@ -73,13 +73,15 @@ export default function Chatbox({ messages, onSend, status, user }) {
       <WhiteSpace />
       <WingBlank>
         <List>
-          <InputItem ref={inputRef} placeholder="say something lovely...">Me:</InputItem>
-          <List.Item>
-            <Flex justify="center">
-              {/* use `am-button-borderfix`. because Multiple buttons inline arranged, the last one border-right may not display */}
-              <Button icon="check-circle-o" inline size="small" onClick={send} className="am-button-borderfix">send</Button>
-            </Flex>
-          </List.Item>
+          <form onSubmit={send}>
+            <InputItem ref={inputRef} placeholder="say something lovely...">Me:</InputItem>
+            <List.Item>
+              <Flex justify="center">
+                {/* use `am-button-borderfix`. because Multiple buttons inline arranged, the last one border-right may not display */}
+                <Button icon="check-circle-o" inline size="small" className="am-button-borderfix" onClick={send}>send</Button>
+              </Flex>
+            </List.Item>
+          </form>
         </List>
       </WingBlank>
     </div>
