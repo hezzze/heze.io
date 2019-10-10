@@ -16,7 +16,7 @@
 
 .am-wingblank{margin-left:8px;margin-right:8px}.am-wingblank.am-wingblank-sm{margin-left:5px;margin-right:5px}.am-wingblank.am-wingblank-md{margin-left:8px;margin-right:8px}.am-wingblank.am-wingblank-lg{margin-left:15px;margin-right:15px}
 
-.hz-messages-box{color:#bebebe;background-color:black;padding:5px 0;height:300px;overflow-y:scroll;font-family:monospace;position:relative}.hz-messages-box .me-message{color:green}.status-box{display:flex;justify-content:space-around;color:#bbb;width:100%;font-size:12px;background-color:black;padding:3px 0px 10px}.status-box .status-text{color:red;margin-left:3px}.status-box .status-text.good-status{color:green}
+.hz-messages-box{color:#bebebe;background-color:black;padding:5px 0;height:100px;overflow-y:scroll;font-family:monospace;position:relative}.hz-messages-box .me-message{color:green}.status-box{display:flex;justify-content:space-around;color:#bbb;width:100%;font-size:12px;background-color:black;padding:3px 0px 10px}.status-box .status-text{color:red;margin-left:3px}.status-box .status-text.good-status{color:green}
 
 .version-text{margin-left:10px;background-color:#000000;padding:2px 5px;color:#d1d1d1;border-radius:6px;font-size:10px}.site-link{color:grey;text-decoration:underline}
 
