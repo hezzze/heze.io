@@ -1,0 +1,29 @@
+.hz-messages-box {
+  color: #bebebe;
+  background-color: black;
+  padding: 5px 0;
+  height: 300px;
+  overflow-y: scroll;
+  font-family: monospace;
+  position: relative;
+  .me-message {
+    color: green;
+  }
+}
+
+.status-box {
+  display: flex;
+  justify-content: space-around;
+  color: #bbb;
+  width: 100%;
+  font-size: 12px;
+  background-color: black;
+  padding: 3px 0px 10px;
+  .status-text {
+    color: red;
+    margin-left: 3px;
+    &.good-status {
+      color: green;
+    }
+  }
+}

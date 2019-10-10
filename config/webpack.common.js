@@ -34,7 +34,10 @@ module.exports = {
         ],
         plugins: [
           '@babel/plugin-proposal-class-properties',
-          '@babel/plugin-transform-regenerator'
+          '@babel/plugin-transform-regenerator',
+
+          // importing css automatically from npm package
+          ['import', { libraryName: 'antd-mobile', style: 'css' }] // `style: true` for less
         ]
       },
       exclude: /node_modules/

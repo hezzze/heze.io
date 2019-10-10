@@ -3,7 +3,7 @@
 * using hooks api from react 16.8+
 */
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './styles';

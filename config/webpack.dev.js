@@ -18,7 +18,7 @@ module.exports = webpackMerge(commonConfig, {
     filename: '[name].js',
   },
   plugins: [
-    new MiniCssExtractPlugin('[name].css'),
+    new MiniCssExtractPlugin('[name].css')
   ],
   devtool: 'cheap-module-source-map',
   devServer: {

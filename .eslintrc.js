@@ -38,7 +38,8 @@ module.exports = {
       'class-methods-use-this': 0,
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
-      "no-mixed-operators": 0
+      "no-mixed-operators": 0,
+      "func-names": ["error", "as-needed"]
     },
     "globals": {
       "React": false,
@@ -47,7 +48,8 @@ module.exports = {
       "_": false,
       "window": false,
       'moment': false,
-      'PropTypes': false
+      'PropTypes': false,
+      'sessionStorage': false
     },
     "settings": {
       "react": {
