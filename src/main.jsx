@@ -2,7 +2,7 @@
 
 import { render } from 'react-dom';
 import { Switch, Route } from 'react-router';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './js/store/store';
 
@@ -17,12 +17,12 @@ if (appContainer) {
   render(
     (
       <Provider store={store}>
-        <BrowserRouter>
+        <HashRouter>
           <Switch>
             <Route path="/about" component={About} />
             <Route path="/" component={App} />
           </Switch>
-        </BrowserRouter>
+        </HashRouter>
       </Provider>
     ), appContainer
   );
