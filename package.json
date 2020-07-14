@@ -1,6 +1,6 @@
 {
   "name": "heze.io",
-  "version": "0.0.1",
+  "version": "1.1.0",
   "description": "could be a static site starter",
   "scripts": {
     "lint-fix": "eslint --fix --ext .js --ignore-path ./.gitignore .",
@@ -39,6 +39,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "react-github-btn": "^1.2.0",
     "react-redux": "^7.1.1",
     "react-redux-toastr": "^7.6.1",
     "react-router": "^5.1.2",

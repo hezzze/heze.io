@@ -1,13 +1,23 @@
 .version-text {
   margin-left: 10px;
   background-color: #000000;
-  padding: 2px 5px;
+  padding: 5px 5px;
   color: #d1d1d1;
   border-radius: 6px;
   font-size: 10px;
 }
 
 .site-link {
+  margin-left: 10px;
   color: grey;
   text-decoration: underline;
+}
+
+.footer-box {
+  display: inline-flex;
+  align-items: center;
+}
+
+.github-btn {
+  margin-top: 5px;
 }
