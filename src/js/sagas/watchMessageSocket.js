@@ -12,12 +12,13 @@ import {
   START_CHANNEL,
   STOP_CHANNEL,
   ADD_MESSAGE,
-  SEND_MESSAGE
+  SEND_MESSAGE,
+  UPDATE_NUM_OF_USERS
 } from '../constants/actionTypes';
 
 import config from '../../config';
 
-const socketServerURL = process.env.ENV === 'production' ? config.apiUrl : 'http://localhost:2222';
+const socketServerURL = process.env.ENV === 'production' ? config.apiUrl : config.apiUrl;
 
 // this function creates an event channel from a given socket
 // Setup subscription to incoming `ping` events
@@ -87,7 +88,7 @@ const connect = () => {
 };
 
 const disconnect = () => {
-  socket = io(socketServerURL);
+  // socket = io(socketServerURL);
   return new Promise((resolve) => {
     socket.on('disconnect', () => {
       resolve(socket);
@@ -96,10 +97,19 @@ const disconnect = () => {
 };
 
 const reconnect = () => {
-  socket = io(socketServerURL);
+  // socket = io(socketServerURL);
   return new Promise((resolve) => {
     socket.on('reconnect', () => {
       resolve(socket);
+    });
+  });
+};
+
+const numOfUsers = () => {
+  // socket = io(socketServerURL);
+  return new Promise((resolve) => {
+    socket.on('num_users', (n) => {
+      resolve(n);
     });
   });
 };
@@ -119,6 +129,13 @@ const listenConnectSaga = function* () {
   }
 };
 
+const listenNumOfClients = function* () {
+  while (true) {
+    const n = yield call(numOfUsers);
+    yield put({ type: UPDATE_NUM_OF_USERS, payload: n });
+  }
+};
+
 const watchSendMessage = function* (sock) {
   yield takeEvery(SEND_MESSAGE, function* sendMessage(action) {
     // call `emit` as a method with `socket` as context
@@ -126,22 +143,21 @@ const watchSendMessage = function* (sock) {
   });
 };
 
-
 // Saga to switch on channel.
 const listenServerSaga = function* () {
   try {
     yield put({ type: CHANNEL_ON });
-    const { timeout } = yield race({
+    const { connected: socketInstance, timeout } = yield race({
       connected: call(connect),
       timeout: delay(2000),
     });
     if (timeout) {
       yield put({ type: SERVER_OFF });
     }
-    const socketInstance = yield call(connect);
     const socketChannel = yield call(createSocketChannel, socketInstance);
     yield fork(listenDisconnectSaga);
     yield fork(listenConnectSaga);
+    yield fork(listenNumOfClients);
     yield put({ type: SERVER_ON });
     yield fork(watchSendMessage, socketInstance);
 

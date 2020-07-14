@@ -10,3 +10,5 @@ export const SERVER_ON = 'SERVER_ON';
 export const SERVER_OFF = 'SERVER_OFF';
 
 export const SEND_MESSAGE = 'SEND_MESSAGE';
+
+export const UPDATE_NUM_OF_USERS = 'UPDATE_NUM_OF_USERS';

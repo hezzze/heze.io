@@ -69,6 +69,12 @@ export default function Chatbox({ messages, onSend, status, user }) {
             <span className={`status-text ${status.serverStatus === 'on' ? 'good-status' : ''}`}>{status.serverStatus}</span>
           </div>
         </div>
+        <div className="status-box">
+          <div>
+            # of live users:
+            <span className="status-text good-status">{status.numOfUsers}</span>
+          </div>
+        </div>
       </WingBlank>
       <WhiteSpace />
       <WingBlank>
