@@ -5,7 +5,12 @@ import reducers from '../reducers';
 import sagas from '../sagas';
 import initialState from './initialState';
 
-const sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware({
+  onError: (error, { sagaStack }) => {
+    console.log(error);
+    console.log(sagaStack);
+  }
+});
 
 const middlewares = [sagaMiddleware];
 

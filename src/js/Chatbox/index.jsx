@@ -49,9 +49,14 @@ export default function Chatbox({ messages, onSend, status, user }) {
               messages.map((m) => (
                 <li key={m.id}>
                   {
-                    m.owner_id === user.id
-                      ? <i className="me-message"><u>me</u></i>
-                      : <i><u>{m.owner_name}</u></i>
+                    m.id === 0 ? (
+                      <li className="system-message">
+                        <span role="img" aria-label="error">⚠️</span>
+                        &nbsp;ERR_CONNECTION_REFUSED
+                      </li>
+                    )
+                    : m.owner_id === user.id ? <i className="me-message"><u>me</u></i>
+                    : <i><u>{m.owner_name}</u></i>
                   }
                   : {m.value}
                 </li>
