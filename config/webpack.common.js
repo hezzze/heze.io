@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const ENV = process.env.NODE_ENV;
+
 module.exports = {
   entry: {
     vendors: ['react', './src/vendors.js', 'lodash', 'moment'],
@@ -52,12 +54,18 @@ module.exports = {
         loader: 'sass-loader',
         options: {
           sourceMap: true,
-          includePaths: ['node_modules', path.resolve(__dirname, './src/styles')]
+          sassOptions: {
+            includePaths: ['node_modules', path.resolve(__dirname, './src/styles')]
+          }
         }
       }]
     }, {
       test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|otf)$/,
-      loader: 'file-loader?name=assets/[name].[hash].[ext]'
+      loader: 'file-loader',
+      options: {
+        publicPath: 'assets',
+        name: '[name].[hash].[ext]'
+      }
     }]
   },
   plugins: [
@@ -71,6 +79,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       favicon: 'src/assets/hz.ico'
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        ENV: JSON.stringify(ENV)
+      }
     })
   ]
 };

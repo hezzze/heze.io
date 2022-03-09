@@ -18,7 +18,7 @@ import {
 
 import config from '../../config';
 
-const socketServerURL = process.env.ENV === 'production' ? config.apiUrl : 'http://localhost:2222';
+const socketServerURL = process.env.ENV === 'production' ? config.apiUrl : 'https://app.meng2x.com';
 
 // this function creates an event channel from a given socket
 // Setup subscription to incoming `ping` events

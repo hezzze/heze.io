@@ -1,7 +1,7 @@
 /* eslint-env browser */
 
 import { render } from 'react-dom';
-import { Switch, Route } from 'react-router';
+import { Routes, Route } from 'react-router';
 import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './js/store/store';
@@ -18,10 +18,10 @@ if (appContainer) {
     (
       <Provider store={store}>
         <HashRouter>
-          <Switch>
-            <Route path="/about" component={About} />
-            <Route path="/" component={App} />
-          </Switch>
+          <Routes>
+            <Route path="/about" element={<About />} />
+            <Route path="/" element={<App />} />
+          </Routes>
         </HashRouter>
       </Provider>
     ), appContainer

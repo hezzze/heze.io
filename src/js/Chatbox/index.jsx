@@ -3,14 +3,14 @@ import {
   Button, List, WingBlank, InputItem,
   Flex, WhiteSpace
 } from 'antd-mobile';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import './index.scss';
 
 export default function Chatbox({ messages, onSend, status, user }) {
   const inputRef = useRef();
   const messagesBoxRef = useRef();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const node = messagesBoxRef.current;
@@ -28,7 +28,7 @@ export default function Chatbox({ messages, onSend, status, user }) {
     // easter egg, konami code
     if (message === 'Curio') {
       inputRef.current.clearInput();
-      history.push('/about');
+      navigate('/about');
       return;
     }
 

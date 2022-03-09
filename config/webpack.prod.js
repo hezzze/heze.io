@@ -1,12 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
-const webpackMerge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const commonConfig = require('./webpack.common.js');
 
-const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
-
-module.exports = webpackMerge(commonConfig, {
+module.exports = merge(commonConfig, {
   mode: 'production',
 
   output: {
@@ -15,7 +13,7 @@ module.exports = webpackMerge(commonConfig, {
     // NOTE: this will add prefix to the asset path
     // like: /app.js
     // publicPath: '/',
-    filename: '[name].[hash].js'
+    filename: '[name].[fullhash].js'
   },
 
   optimization: {
@@ -24,12 +22,8 @@ module.exports = webpackMerge(commonConfig, {
 
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
-    new MiniCssExtractPlugin('[name].[hash].css'),
-    new webpack.DefinePlugin({
-      'process.env': {
-        ENV: JSON.stringify(ENV),
-        NODE_ENV: JSON.stringify(ENV)
-      }
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash].css'
     })
   ]
 });

@@ -1,9 +1,10 @@
 const path = require('path');
-const webpackMerge = require('webpack-merge');
+const webpack = require('webpack');
+const { merge } = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const commonConfig = require('./webpack.common.js');
 
-module.exports = webpackMerge(commonConfig, {
+module.exports = merge(commonConfig, {
   // debug: true, //TODO: figure out what this means
   mode: 'development',
   output: {
@@ -18,7 +19,7 @@ module.exports = webpackMerge(commonConfig, {
     filename: '[name].js',
   },
   plugins: [
-    new MiniCssExtractPlugin('[name].css')
+    new MiniCssExtractPlugin()
   ],
   devtool: 'cheap-module-source-map',
   devServer: {
@@ -26,12 +27,13 @@ module.exports = webpackMerge(commonConfig, {
     // this is the endpoint where the webpack static/bundle assets
     // will be served, by default it's '/'
     host: '0.0.0.0',
+    port: 8089,
     // contentBase: 'build',
-    publicPath: '/',
     historyApiFallback: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
-    stats: 'minimal',
-    inline: true,
-    port: 8089
+    devMiddleware: {
+      stats: 'minimal',
+      publicPath: '/'
+    }
   }
 });
