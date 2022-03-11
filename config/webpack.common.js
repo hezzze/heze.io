@@ -9,8 +9,7 @@ module.exports = {
   entry: {
     vendors: ['react', './src/vendors.js', 'lodash', 'moment'],
 
-    // polyfill is for async/await functionality
-    app: ['@babel/polyfill', './src/main.jsx']
+    app: ['./src/main.jsx']
   },
   resolve: {
     extensions: ['*', '.js', '.jsx'],
@@ -36,10 +35,11 @@ module.exports = {
         ],
         plugins: [
           '@babel/plugin-proposal-class-properties',
-          '@babel/plugin-transform-regenerator',
+          '@babel/plugin-transform-regenerator'
 
           // importing css automatically from npm package
-          ['import', { libraryName: 'antd-mobile', style: 'css' }] // `style: true` for less
+          // ['import', { libraryName: 'antd-mobile', style: 'css' }]
+          // `style: true` for less
         ]
       },
       exclude: /node_modules/
@@ -63,6 +63,7 @@ module.exports = {
       test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|otf)$/,
       loader: 'file-loader',
       options: {
+        outputPath: 'assets',
         publicPath: 'assets',
         name: '[name].[hash].[ext]'
       }

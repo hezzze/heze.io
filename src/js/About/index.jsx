@@ -1,12 +1,12 @@
 import {
-  Button, Flex, WhiteSpace
+  Button, Space
 } from 'antd-mobile';
 import { useNavigate } from 'react-router-dom';
 
 import AtvImage from '../AtvImage';
 import './index.scss';
 
-const backImageSrc = require('../../assets/card-back.png');
+import backImageSrc from '../../assets/card-back.png';
 
 export default function About() {
   const navigate = useNavigate();
@@ -23,11 +23,11 @@ export default function About() {
           style={{ width: 320, height: 320 }}
         />
       </div>
-      <WhiteSpace />
-      <Flex justify="center">
-        {/* use `am-button-borderfix`. because Multiple buttons inline arranged, the last one border-right may not display */}
-        <Button icon="left" inline size="small" onClick={() => navigate('/')} className="am-button-borderfix">back</Button>
-      </Flex>
+      <Space justify="center" block>
+        <Button size="small" onClick={() => navigate('/')}>
+          <i className="fa-regular fa-circle-left" style={{ marginRight: '5px' }} />back
+        </Button>
+      </Space>
     </div>
   );
 }

@@ -53,7 +53,7 @@ module.exports = {
     },
     "settings": {
       "react": {
-        "version": "16.0"
+        "version": "17.0"
       }
     }
 };
