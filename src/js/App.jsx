@@ -4,6 +4,8 @@ import uuid from 'uuid/v4';
 import Chatbox from './Chatbox';
 import Footer from './Footer';
 
+import VideoBg from './VideoBg';
+
 import {
   START_CHANNEL,
   STOP_CHANNEL,
@@ -41,6 +43,7 @@ const App = () => {
 
   return (
     <div>
+      <VideoBg />
       <center><p>你好，朋友<br />What triggers your <u>Curio</u>sity today?</p></center>
       <Chatbox messages={messages} onSend={onSend} status={status} user={user} />
       <Footer />
