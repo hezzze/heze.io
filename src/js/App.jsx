@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import Chatbox from './Chatbox';
 import Footer from './Footer';
 

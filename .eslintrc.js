@@ -7,12 +7,17 @@ module.exports = {
         "react-hooks"
     ],
     "parserOptions": {
-      "ecmaVersion": 8,
+      "ecmaVersion": 2022,
+      "sourceType": "module",
+      "requireConfigFile": false,
+      "babelOptions": {
+        "presets": ["@babel/preset-react"]
+      },
       "ecmaFeatures": {
           "jsx": true
       }
     },
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",
     "rules": {
       "react/react-in-jsx-scope": 0,
       "comma-dangle": "off",
@@ -53,7 +58,7 @@ module.exports = {
     },
     "settings": {
       "react": {
-        "version": "17.0"
+        "version": "18.3"
       }
     }
 };

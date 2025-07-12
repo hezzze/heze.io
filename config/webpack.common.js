@@ -12,7 +12,7 @@ module.exports = {
     app: ['./src/main.jsx']
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
     modules: [path.resolve(__dirname, '../node_modules'), 'build'],
     alias: {
       // lib: path.join(__dirname, '../src/js/lib'),
@@ -29,9 +29,13 @@ module.exports = {
           ['@babel/preset-env', {
             targets: {
               browsers: ['last 2 versions', 'safari >= 7']
-            }
+            },
+            useBuiltIns: 'entry',
+            corejs: 3
           }],
-          '@babel/preset-react'
+          ['@babel/preset-react', {
+            runtime: 'automatic'
+          }]
         ],
         plugins: [
           '@babel/plugin-proposal-class-properties',
@@ -54,18 +58,17 @@ module.exports = {
         loader: 'sass-loader',
         options: {
           sourceMap: true,
+          api: 'modern',
           sassOptions: {
-            includePaths: ['node_modules', path.resolve(__dirname, './src/styles')]
+            includePaths: ['node_modules', path.resolve(__dirname, '../src/styles')]
           }
         }
       }]
     }, {
       test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|otf)$/,
-      loader: 'file-loader',
-      options: {
-        outputPath: 'assets',
-        publicPath: 'assets',
-        name: '[name].[hash].[ext]'
+      type: 'asset/resource',
+      generator: {
+        filename: 'assets/[name].[hash][ext]'
       }
     }]
   },

@@ -9,10 +9,7 @@ module.exports = merge(commonConfig, {
 
   output: {
     path: path.resolve(__dirname, '../build'),
-
-    // NOTE: this will add prefix to the asset path
-    // like: /app.js
-    // publicPath: '/',
+    publicPath: '/',
     filename: '[name].[fullhash].js'
   },
 

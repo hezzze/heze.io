@@ -5,7 +5,7 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 /* eslint-env browser */
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Routes, Route } from 'react-router';
 import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -19,16 +19,15 @@ import About from './js/About';
 const appContainer = document.getElementById('app');
 
 if (appContainer) {
-  render(
-    (
-      <Provider store={store}>
-        <HashRouter>
-          <Routes>
-            <Route path="/about" element={<About />} />
-            <Route path="/" element={<App />} />
-          </Routes>
-        </HashRouter>
-      </Provider>
-    ), appContainer
+  const root = createRoot(appContainer);
+  root.render(
+    <Provider store={store}>
+      <HashRouter>
+        <Routes>
+          <Route path="/about" element={<About />} />
+          <Route path="/" element={<App />} />
+        </Routes>
+      </HashRouter>
+    </Provider>
   );
 }

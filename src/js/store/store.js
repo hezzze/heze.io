@@ -1,6 +1,5 @@
-import { applyMiddleware, createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import reducers from '../reducers';
 import sagas from '../sagas';
 import initialState from './initialState';
@@ -12,15 +11,18 @@ const sagaMiddleware = createSagaMiddleware({
   }
 });
 
-const middlewares = [sagaMiddleware];
-
-const enhancer = composeWithDevTools(applyMiddleware(...middlewares));
-
-const store = createStore(
-  reducers,
-  initialState,
-  enhancer
-);
+const store = configureStore({
+  reducer: reducers,
+  preloadedState: initialState,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: false, // We're using saga instead of thunk
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE']
+      }
+    }).concat(sagaMiddleware),
+  devTools: process.env.NODE_ENV !== 'production'
+});
 
 sagaMiddleware.run(sagas);
 

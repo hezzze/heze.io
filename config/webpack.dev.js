@@ -23,17 +23,18 @@ module.exports = merge(commonConfig, {
   ],
   devtool: 'cheap-module-source-map',
   devServer: {
-
-    // this is the endpoint where the webpack static/bundle assets
-    // will be served, by default it's '/'
     host: '0.0.0.0',
     port: 8089,
-    // contentBase: 'build',
     historyApiFallback: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
-    devMiddleware: {
-      stats: 'minimal',
-      publicPath: '/'
+    static: {
+      directory: path.resolve(__dirname, '../build')
+    },
+    client: {
+      overlay: {
+        errors: true,
+        warnings: false
+      }
     }
   }
 });
