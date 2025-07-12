@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const ENV = process.env.NODE_ENV;
 
@@ -81,8 +82,19 @@ module.exports = {
       moment: 'moment'
     }),
     new HtmlWebpackPlugin({
-      template: 'src/index.html',
+      template: 'public/index.html',
       favicon: 'src/assets/hz.ico'
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'public',
+          to: '',
+          globOptions: {
+            ignore: ['**/index.html']
+          }
+        }
+      ]
     }),
     new webpack.DefinePlugin({
       'process.env': {

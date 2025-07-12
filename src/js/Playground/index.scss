@@ -1,0 +1,94 @@
+// Antd Mobile Theme Customization
+// Black, white, pinkish low-saturation color scheme
+:root:root {
+  --adm-color-primary: #d4a5a5;
+  --adm-color-success: #a5d4a5;
+  --adm-color-warning: #d4c5a5;
+  --adm-color-danger: #d4a5a5;
+  --adm-color-white: #ffffff;
+  --adm-color-text: #2d2d2d;
+  --adm-color-text-secondary: #666666;
+  --adm-color-weak: #999999;
+  --adm-color-light: #f0f0f0;
+  --adm-color-border: #e8e8e8;
+  --adm-color-box: #fafafa;
+  --adm-color-background: #ffffff;
+}
+
+.playground-page {
+  min-height: 100vh;
+  background-color: var(--adm-color-background);
+}
+
+.content-container {
+  min-height: calc(100vh - 45px); // Account for NavBar height
+  background-color: var(--adm-color-box);
+}
+
+.result-card {
+  text-align: center;
+  margin-bottom: 16px;
+  
+  .result-content {
+    padding: 24px 16px;
+    
+    .number-display {
+      font-size: 56px;
+      font-weight: 700;
+      color: var(--adm-color-primary);
+      line-height: 1.1;
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+    
+    .description {
+      font-size: 18px;
+      color: var(--adm-color-text-secondary);
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    
+    .target-date {
+      font-size: 14px;
+      color: var(--adm-color-weak);
+      font-weight: 400;
+      padding: 8px 16px;
+      background-color: var(--adm-color-light);
+      border-radius: 8px;
+      display: inline-block;
+      border: 1px solid var(--adm-color-border);
+    }
+  }
+}
+
+.date-card {
+  margin-bottom: 16px;
+  
+  .adm-card-header {
+    color: var(--adm-color-text);
+    font-weight: 600;
+  }
+}
+
+// Dark mode support using CSS variables
+@media (prefers-color-scheme: dark) {
+  :root:root {
+    --adm-color-primary: #c49999;
+    --adm-color-success: #99c499;
+    --adm-color-warning: #c4b599;
+    --adm-color-danger: #c49999;
+    --adm-color-white: #1a1a1a;
+    --adm-color-text: #e8e8e8;
+    --adm-color-text-secondary: #b8b8b8;
+    --adm-color-weak: #888888;
+    --adm-color-light: #2d2d2d;
+    --adm-color-border: #404040;
+    --adm-color-box: #1a1a1a;
+    --adm-color-background: #000000;
+  }
+  
+  .result-card .result-content .target-date {
+    background-color: var(--adm-color-light);
+    border-color: var(--adm-color-border);
+  }
+}

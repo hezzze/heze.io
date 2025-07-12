@@ -7,12 +7,16 @@ import 'regenerator-runtime/runtime';
 /* eslint-env browser */
 import { createRoot } from 'react-dom/client';
 import { Routes, Route } from 'react-router';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './js/store/store';
 
+// Initialize i18n
+import './i18n';
+
 import App from './js/App';
 import About from './js/About';
+import Playground from './js/Playground';
 
 // import 'antd-mobile/dist/antd-mobile.css';
 
@@ -22,12 +26,13 @@ if (appContainer) {
   const root = createRoot(appContainer);
   root.render(
     <Provider store={store}>
-      <HashRouter>
+      <BrowserRouter>
         <Routes>
           <Route path="/about" element={<About />} />
+          <Route path="/playground" element={<Playground />} />
           <Route path="/" element={<App />} />
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
     </Provider>
   );
 }
